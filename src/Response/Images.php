@@ -13,7 +13,7 @@ class Images extends Response
     {
         parent::__construct($items);
         
-        $this->createdDate = DateTime::setTimestamp($create);
+        $this->createdDate = (new DateTime())->setTimestamp($create);
     }
     
     public function validate(): bool

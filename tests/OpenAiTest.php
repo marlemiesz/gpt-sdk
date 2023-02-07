@@ -10,7 +10,7 @@ class OpenAiTest extends TestCase
 {
     const envFile = __DIR__ . '/../.env.test';
     
-    const prompt = 'Generate an image of a Sempai Company';
+    const prompt = 'Sport car';
     private OpenAi $openAi;
     
     private function validateEnv(): void
@@ -33,6 +33,9 @@ class OpenAiTest extends TestCase
     }
     public function testGenerateImage()
     {
-        var_dump($this->openAi->generateImage(self::prompt, 1, ImageSizeEnum::small));die();
+        $response = $this->openAi->generateImage(self::prompt, 1, ImageSizeEnum::small);
+        $this->assertIsArray($response->getItems());
+        $this->assertIsString($response->getFirstItem()->getUrl());
+        $this->assertIsInt($response->getCreatedDate()->getTimestamp());
     }
 }

@@ -8,7 +8,9 @@ use Marlemiesz\GptSdk\Request\RequestInterface;
 class GuzzleClient extends HttpClient
 {
     const HTTP_SUCCESS = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226];
-    public function __construct(string $apiKey)
+    private Client $httpConnection;
+    
+    public function __construct(readonly string $apiKey)
     {
         $this->httpConnection = new Client([
             'base_uri' => self::API_URL,
