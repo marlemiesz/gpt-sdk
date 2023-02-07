@@ -1,5 +1,7 @@
 <?php
 namespace Marlemiesz\GptSdk;
+use Marlemiesz\GptSdk\Enum\ImageResponseFormatEnum;
+use Marlemiesz\GptSdk\Enum\ImageSizeEnum;
 use Marlemiesz\GptSdk\HttpClient\GuzzleClient;
 use Marlemiesz\GptSdk\HttpClient\HttpClientInterface;
 use Marlemiesz\GptSdk\Response\Images;
@@ -22,7 +24,12 @@ readonly class OpenAi
      * @param string $responseFormat
      * @return Images
      */
-    public function generateImage(string $prompt, int $numberImagesToGenerate, string $size, string $responseFormat = 'url'): Images
+    public function generateImage(
+        string $prompt,
+        int $numberImagesToGenerate,
+        ImageSizeEnum $size,
+        ImageResponseFormatEnum $responseFormat = ImageResponseFormatEnum::url
+    ): Images
     {
         $request = new Request\ImageGenerationFromScratch($prompt, $numberImagesToGenerate, $size, $responseFormat);
         return $this->client->call($request);

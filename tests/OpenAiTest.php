@@ -2,11 +2,15 @@
 
 namespace Marlemiesz\GptSdk;
 
+use Marlemiesz\GptSdk\Enum\ImageResponseFormatEnum;
+use Marlemiesz\GptSdk\Enum\ImageSizeEnum;
 use PHPUnit\Framework\TestCase;
 
 class OpenAiTest extends TestCase
 {
     const envFile = __DIR__ . '/../.env.test';
+    
+    const prompt = 'Generate an image of a Sempai Company';
     private OpenAi $openAi;
     
     private function validateEnv(): void
@@ -29,6 +33,6 @@ class OpenAiTest extends TestCase
     }
     public function testGenerateImage()
     {
-    
+        var_dump($this->openAi->generateImage(self::prompt, 1, ImageSizeEnum::small));die();
     }
 }

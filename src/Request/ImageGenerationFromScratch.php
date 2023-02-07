@@ -3,6 +3,8 @@
 namespace Marlemiesz\GptSdk\Request;
 
 use Marlemiesz\GptSdk\Entity\Image;
+use Marlemiesz\GptSdk\Enum\ImageResponseFormatEnum;
+use Marlemiesz\GptSdk\Enum\ImageSizeEnum;
 use Marlemiesz\GptSdk\Request\Payload\CreateImagePayload;
 use Marlemiesz\GptSdk\Request\Payload\PayloadInterface;
 use Marlemiesz\GptSdk\Response\Images;
@@ -17,8 +19,8 @@ class ImageGenerationFromScratch implements RequestInterface
     public function __construct(
         string $prompt,
         int $numberImagesToGenerate,
-        string $size,
-        string $responseFormat = 'url',
+        ImageSizeEnum $size,
+        ImageResponseFormatEnum $responseFormat = ImageResponseFormatEnum::url,
     ) {
         $this->payload = new CreateImagePayload($prompt, $numberImagesToGenerate, $size, $responseFormat);
     }
