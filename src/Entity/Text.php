@@ -5,10 +5,10 @@ namespace Marlemiesz\GptSdk\Entity;
 class Text implements EntityInterface
 {
     public function __construct(
-        readonly string $text,
-        readonly int    $index,
-        readonly int    $logprobs,
-        readonly int    $finishReason
+        readonly string   $text,
+        readonly int      $index,
+        readonly int|null $logprobs,
+        readonly string   $finishReason
     )
     {
     }

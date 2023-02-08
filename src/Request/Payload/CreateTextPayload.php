@@ -3,6 +3,7 @@
 namespace Marlemiesz\GptSdk\Request\Payload;
 
 use Marlemiesz\GptSdk\Enum\GptModelEnum;
+use Marlemiesz\GptSdk\Utils;
 
 class CreateTextPayload implements PayloadInterface
 {
@@ -49,8 +50,8 @@ class CreateTextPayload implements PayloadInterface
     
     public function toPrimitive(): array
     {
-        return [
-            'model' => $this->model,
+        return Utils::removeNullValueFromArray([
+            'model' => $this->model->getValue(),
             'prompt' => $this->prompt,
             'suffix' => $this->suffix,
             'max_tokens' => $this->maxTokens,
@@ -65,6 +66,6 @@ class CreateTextPayload implements PayloadInterface
             'frequency_penalty' => $this->frequencyPenalty,
             'best_of' => $this->bestOf,
             'logit_bias' => $this->logitBias,
-        ];
+        ]);
     }
 }
