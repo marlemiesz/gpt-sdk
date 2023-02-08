@@ -3,11 +3,11 @@
 Require this package in your `composer.json` and update composer.
 
 ```php
-"marlemiesz/gpt-sdk": "dev-master"
+"marlemiesz/gpt-sdk": "^0.1"
 ```
 OR
 ```php
-composer require marlemiesz/gpt-sdk: dev-master
+composer require marlemiesz/gpt-sdk: 0.1
 ```
 
 # Docs
