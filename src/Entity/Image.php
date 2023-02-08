@@ -21,7 +21,7 @@ class Image implements EntityInterface
         $this->url = $url;
     }
     
-    public function fromPrimitive(array $data): EntityInterface
+    public static function fromPrimitive(array $data): EntityInterface
     {
         return new self($data['url']);
     }

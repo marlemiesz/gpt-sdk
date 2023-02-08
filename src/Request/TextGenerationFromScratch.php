@@ -1,45 +1,21 @@
 <?php
 
-namespace Marlemiesz\GptSdk;
+namespace Marlemiesz\GptSdk\Request;
 
+use Marlemiesz\GptSdk\Entity\Text;
 use Marlemiesz\GptSdk\Enum\GptModelEnum;
-use Marlemiesz\GptSdk\Enum\ImageResponseFormatEnum;
-use Marlemiesz\GptSdk\Enum\ImageSizeEnum;
-use Marlemiesz\GptSdk\HttpClient\GuzzleClient;
-use Marlemiesz\GptSdk\HttpClient\HttpClientInterface;
-use Marlemiesz\GptSdk\Response\Images;
+use Marlemiesz\GptSdk\Request\Payload\CreateTextPayload;
+use Marlemiesz\GptSdk\Request\Payload\PayloadInterface;
+use Marlemiesz\GptSdk\Response\ResponseInterface;
 use Marlemiesz\GptSdk\Response\Texts;
 
-readonly class OpenAi
+class TextGenerationFromScratch implements RequestInterface
 {
+    const METHOD = 'POST';
+    const URI = '/v1/completions';
+    private CreateTextPayload $payload;
     
-    
-    private HttpClientInterface $client;
-    
-    public function __construct(string $apiKey)
-    {
-        $this->client = new GuzzleClient($apiKey);
-    }
-    
-    /**
-     * @param string $prompt
-     * @param int $numberImagesToGenerate
-     * @param string $size
-     * @param string $responseFormat
-     * @return Images
-     */
-    public function generateImage(
-        string                  $prompt,
-        int                     $numberImagesToGenerate,
-        ImageSizeEnum           $size,
-        ImageResponseFormatEnum $responseFormat = ImageResponseFormatEnum::url
-    ): Images
-    {
-        $request = new Request\ImageGenerationFromScratch($prompt, $numberImagesToGenerate, $size, $responseFormat);
-        return $this->client->call($request);
-    }
-    
-    public function generateText(
+    public function __construct(
         GptModelEnum      $model,
         string            $prompt,
         string|null       $suffix = null,
@@ -55,9 +31,9 @@ readonly class OpenAi
         float             $frequencyPenalty = 0,
         int               $bestOf = 1,
         int|null          $logitBias = null
-    ): Texts
+    )
     {
-        $request = new Request\TextGenerationFromScratch(
+        $this->payload = new CreateTextPayload(
             model: $model,
             prompt: $prompt,
             suffix: $suffix,
@@ -74,8 +50,30 @@ readonly class OpenAi
             bestOf: $bestOf,
             logitBias: $logitBias
         );
-        return $this->client->call($request);
+        
     }
     
+    public function getMethod(): string
+    {
+        return self::METHOD;
+    }
     
+    public function getUri(): string
+    {
+        return self::URI;
+    }
+    
+    public function getPayload(): PayloadInterface|null
+    {
+        return $this->payload;
+    }
+    
+    public function prepareResponse(array $response): ResponseInterface
+    {
+        $texts = [];
+        foreach ($response['choices'] as $item) {
+            $texts[] = new Text($item['text'], $item['index'], $item['logprobs'], $item['finish_reason']);
+        }
+        return new Texts($texts, $response['created'], $response['model'], $response['id']);
+    }
 }
