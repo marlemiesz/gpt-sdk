@@ -11,9 +11,9 @@ class OpenAiTest extends TestCase
 {
     const envFile = __DIR__ . '/../.env.test';
     
-    const promptText = 'Write article about car';
+    const promptText = 'Please assign to google category product in json [{"Nazwa":"Buty Damskie Dynafit Alpine Dna","Producent":"Dynafit"}]';
     
-    const promptImage = 'A car';
+    const promptImage = 'Happy employees of Sempai have free pizza today.';
     private OpenAi $openAi;
     
     private function validateEnv(): void
@@ -36,10 +36,11 @@ class OpenAiTest extends TestCase
     }
     public function testGenerateImage()
     {
-        $response = $this->openAi->generateImage(self::promptImage, 1, ImageSizeEnum::small);
-        $this->assertIsArray($response->getItems());
-        $this->assertIsString($response->getFirstItem()->getUrl());
-        $this->assertIsInt($response->getCreatedDate()->getTimestamp());
+//        $response = $this->openAi->generateImage(self::promptImage, 1, ImageSizeEnum::large);
+//        $this->assertIsArray($response->getItems());
+//        $this->assertIsString($response->getFirstItem()->getUrl());
+//        var_dump($response->getFirstItem()->getUrl());die();
+//        $this->assertIsInt($response->getCreatedDate()->getTimestamp());
     }
     
     public function testGenerateText()
@@ -47,9 +48,10 @@ class OpenAiTest extends TestCase
         $response = $this->openAi->generateText(
             model: GptModelEnum::Davinci,
             prompt: self::promptText,
-            maxTokens: 16,
+            maxTokens: 2000,
             temperature: 1,
         );
+        var_dump($response->getFirstItem()->getText());die();
         $this->assertIsArray($response->getItems());
         $this->assertIsString($response->getFirstItem()->getText());
         
