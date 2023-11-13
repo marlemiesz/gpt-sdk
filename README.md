@@ -29,6 +29,17 @@ $response = $openai->generateText(
             temperature: 1,
         );
 ```
+## Chat Completion
+Api Reference: https://platform.openai.com/docs/api-reference/chat
+### Create chat completion
+```php
+$response = $openai->generateChatText(
+            model: GptChatModelEnum::GPT35Turbo,
+            role: 'user',
+            content: 'Prompt text',
+            maxTokens: 160,
+        );
+```
 ## Image
 Api Reference: https://platform.openai.com/docs/api-reference/images/create
 ### Create image

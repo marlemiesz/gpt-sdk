@@ -6,11 +6,11 @@ use DateTime;
 
 class Texts extends Response
 {
-    
+
     private DateTime $createdDate;
     private string $model;
     private string $id;
-    
+
     /**
      * @param array $items
      * @param int $created
@@ -20,12 +20,12 @@ class Texts extends Response
     public function __construct(array $items, int $created, string $model, string $id)
     {
         parent::__construct($items);
-        
+
         $this->createdDate = (new DateTime())->setTimestamp($created);
         $this->model = $model;
         $this->id = $id;
     }
-    
+
     /**
      * @return DateTime
      */
@@ -33,7 +33,7 @@ class Texts extends Response
     {
         return $this->createdDate;
     }
-    
+
     /**
      * @return string
      */
@@ -41,7 +41,7 @@ class Texts extends Response
     {
         return $this->model;
     }
-    
+
     /**
      * @return string
      */
@@ -49,17 +49,17 @@ class Texts extends Response
     {
         return $this->id;
     }
-    
+
     public function validate(): bool
     {
         foreach($this->items as $item) {
-            if(!$item instanceof \Marlemiesz\GptSdk\Entity\Text) {
+            if(!$item instanceof \Marlemiesz\GptSdk\Entity\Text && !$item instanceof \Marlemiesz\GptSdk\Entity\Chat) {
                 throw new \Exception('All posts must be instance of Marlemiesz\GptSdk\Entity\Text');
             }
         }
         return true;
     }
-    
-    
-    
+
+
+
 }
