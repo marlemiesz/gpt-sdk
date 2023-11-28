@@ -7,7 +7,7 @@ Require this package in your `composer.json` and update composer.
 ```
 OR
 ```php
-composer require marlemiesz/gpt-sdk: 0.1
+composer require marlemiesz/gpt-sdk: 0.2
 ```
 
 # Docs
