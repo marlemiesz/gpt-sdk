@@ -3,7 +3,7 @@
 Require this package in your `composer.json` and update composer.
 
 ```php
-"marlemiesz/gpt-sdk": "^0.1"
+"marlemiesz/gpt-sdk": "^0.2"
 ```
 OR
 ```php
