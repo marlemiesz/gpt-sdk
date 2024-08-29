@@ -75,7 +75,7 @@ class CreateChatTextPayload implements PayloadInterface
             'tool_choice' => $this->tool_choice,
             'user' => $this->user,
             'response_format' => $this->response_format,
-            'seed' => $this->seed,
+            'seed' => $this->seed
         ]);
     }
 }
