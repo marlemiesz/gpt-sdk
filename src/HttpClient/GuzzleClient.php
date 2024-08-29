@@ -9,7 +9,7 @@ class GuzzleClient extends HttpClient
 {
     const HTTP_SUCCESS = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226];
     private Client $httpConnection;
-    
+
     public function __construct(readonly string $apiKey)
     {
         $this->httpConnection = new Client([
@@ -20,12 +20,12 @@ class GuzzleClient extends HttpClient
             ]
         ]);
     }
-    
+
     public function getAuthorization(): string
     {
         return 'Bearer ' . $this->apiKey;
     }
-    
+
     public function call(RequestInterface $request)
     {
         $response = $this->httpConnection->request($request->getMethod(), $request->getUri(), [
@@ -34,7 +34,7 @@ class GuzzleClient extends HttpClient
         $this->validResponse($response);
         return $request->prepareResponse(json_decode($response->getBody()->getContents(), true));
     }
-    
+
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
      * @return void

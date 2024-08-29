@@ -8,22 +8,25 @@ class Texts extends Response
 {
 
     private DateTime $createdDate;
-    private string $model;
+    public string $model;
     private string $id;
+    public array $usage;
 
     /**
      * @param array $items
      * @param int $created
      * @param string $model
      * @param string $id
+     * @param array|null $usage
      */
-    public function __construct(array $items, int $created, string $model, string $id)
+    public function __construct(array $items, int $created, string $model, string $id, array $usage = null)
     {
         parent::__construct($items);
 
         $this->createdDate = (new DateTime())->setTimestamp($created);
         $this->model = $model;
         $this->id = $id;
+        $this->usage = $usage;
     }
 
     /**

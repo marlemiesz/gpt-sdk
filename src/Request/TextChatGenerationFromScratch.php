@@ -77,7 +77,8 @@ class TextChatGenerationFromScratch implements RequestInterface
         $texts = [];
         foreach ($response['choices'] as $item) {
             $texts[] = new Chat($item['message']['role'], $item['message']['content'], $item['index'], $item['finish_reason']);
-        }
-        return new Texts($texts, $response['created'], $response['model'], $response['id']);
+        };
+
+        return new Texts($texts, $response['created'], $response['model'], $response['id'], (new PriceCalculation)->calculatePrice($response['model'], $response['usage']));
     }
 }
